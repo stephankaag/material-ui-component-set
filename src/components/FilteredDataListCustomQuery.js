@@ -105,6 +105,14 @@
               where = {...where, country: {id: {eq: filterState.filterState.countryid}}}
             }
 
+            if(filterState.filterState.standardid) {
+              where = {...where, id: {eq: filterState.filterState.standardid}}
+            }
+
+            if(filterState.filterState.classcode) {
+              where = {...where, classes: {code: {eq: filterState.filterState.classcode}}}
+            }
+
           }
 
           const g = gql(q);
