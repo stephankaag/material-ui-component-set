@@ -22,50 +22,6 @@
         const { gql } = window;
         const { Query, env, getModel } = B;
 
-        const buildFilter = ([lhs, operator, rhs]) => {
-          if (!lhs || !rhs) {
-            return {};
-          }
-
-          const lhsProperty = B.getProperty(lhs);
-
-          if (!lhsProperty) {
-            return {};
-          }
-
-          const { name: propertyName, kind } = lhsProperty;
-
-          const getRawValue = (opts, value) =>
-            opts.includes(kind) ? parseInt(value, 10) : value;
-
-          const getInputVariableValue = value => {
-            const variable = B.getVariable(value.id);
-            if (variable) {
-              // eslint-disable-next-line no-undef
-              const params = useParams();
-
-              return variable.kind === 'integer'
-                ? parseInt(params[variable.name], 10)
-                : params[variable.name];
-            }
-
-            return null;
-          };
-
-          const isInputVariable = value =>
-            value && value[0] && value[0].type === 'INPUT';
-
-          const rhsValue = isInputVariable(rhs)
-            ? getInputVariableValue(rhs[0])
-            : getRawValue(['serial', 'integer'], rhs[0]);
-
-          return {
-            [propertyName]: {
-              [operator]: rhsValue,
-            },
-          };
-        };
-
         /* Layouts */
 
         const builderLayout = () => (
@@ -133,7 +89,7 @@
           if (options.filter) {
             where = B.useFilter(options.filter);
           }
-          console.log(options.filter);
+
           const g = gql(q);
 
           return (
