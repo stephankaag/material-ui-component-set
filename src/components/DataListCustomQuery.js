@@ -1,7 +1,7 @@
 (() => ({
   name: 'DataListCustomQuery',
   icon: 'DataList',
-  category: 'CONTENT',
+  category: 'DATA',
   type: 'CONTAINER_COMPONENT',
   allowedTypes: ['BODY_COMPONENT', 'CONTAINER_COMPONENT', 'CONTENT_COMPONENT'],
   orientation: 'HORIZONTAL',
@@ -86,18 +86,6 @@
             >
               {isPristine ? 'Data List' : children}
             </div>
-            {Array.from(Array(take - 1).keys()).map(key => (
-              <div
-                key={key}
-                className={[
-                  isDev ? classes.pristine : '',
-                  classes.empty,
-                  classes.placeholder,
-                ].join(' ')}
-              >
-                {isDev ? 'Dynamic Item' : ''}
-              </div>
-            ))}
             <div className={classes.footer}>
               {(isDev || options.model) && (
                 <Pagination totalCount={0} resultCount={take} currentPage={1} />
@@ -111,7 +99,7 @@
             return builderLayout();
           }
 
-          const where = buildFilter(options.filter);
+          let where = {};
 
           if (searchProp && search !== '') {
             where[searchProp.name] = {
@@ -120,11 +108,10 @@
             };
           }
 
-          const variables = Object.assign(
-            Object.keys(where).length !== 0 && {
-              where,
-            },
-          );
+          if (options.customfilter) {
+            const params = useParams();
+            where = JSON.parse(Mustache.render(options.customfilter, params));
+          }
 
           const m = getModel(options.model);
 
@@ -143,7 +130,10 @@
                 totalCount\
             }\
           }';
-
+          if (options.filter) {
+            where = B.useFilter(options.filter);
+          }
+          console.log(options.filter);
           const g = gql(q);
 
           return (
@@ -154,6 +144,7 @@
                 skip: page ? (page - 1) * take : 0,
                 take: take,
               }}
+              pollInterval={options.polling ? 1500 : 0}
             >
               {({ loading, error, data }) => {
                 if (loading) return 'loading...';

@@ -13,7 +13,7 @@
           type: 'MODEL',
         },
         {
-          value: ['', 'eq', ''],
+          value: {},
           label: 'Filter',
           key: 'filter',
           type: 'FILTER',
@@ -29,6 +29,18 @@
           configuration: {
             as: 'MULTILINE'
           }
+        },
+        {
+          key: 'polling',
+          type: 'TOGGLE',
+          value: false,
+          label: 'Auto refresh'
+        },
+        {
+          value: '',
+          label: 'Custom filter',
+          key: 'customfilter',
+          type: 'TEXT'
         },
         {
           value: '',
