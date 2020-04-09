@@ -21,6 +21,7 @@
             dependsOn: 'model',
           },
         },
+
         {
           key: 'select',
           label: 'Selected properties',
@@ -30,6 +31,16 @@
             as: 'MULTILINE'
           }
         },
+        {
+          value: '',
+          label: 'Filter statement',
+          key: 'customFilterStatementTest',
+          type: 'CUSTOM',
+          configuration: {
+            as: 'MULTILINE',
+          }
+        },
+
         {
           key: 'polling',
           type: 'TOGGLE',
@@ -51,6 +62,7 @@
             dependsOn: 'model',
           },
         },
+
         {
           value: '5',
           label: 'Rows per page (max 50)',

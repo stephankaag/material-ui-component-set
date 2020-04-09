@@ -93,27 +93,30 @@
           }
 
           if(filterState && filterState.filterState) {
-            if(filterState.filterState.regionid) {
-              where = {...where, region: {id: {eq: filterState.filterState.regionid}}}
-            }
-
-            if(filterState.filterState.languageid) {
-              where = {...where, language: {id: {eq: filterState.filterState.languageid}}}
-            }
-
-            if(filterState.filterState.countryid) {
-              where = {...where, country: {id: {eq: filterState.filterState.countryid}}}
-            }
-
-            if(filterState.filterState.standardid) {
-              where = {...where, id: {eq: filterState.filterState.standardid}}
-            }
-
-            if(filterState.filterState.classcode) {
-              where = {...where, classes: {code: {eq: filterState.filterState.classcode}}}
-            }
+            eval(options.customFilterStatementTest)
+            // if(filterState.filterState.regionid) {
+            //   where = {...where, region: {id: {eq: filterState.filterState.regionid}}}
+            // }
+            //
+            // if(filterState.filterState.languageid) {
+            //   where = {...where, language: {id: {eq: filterState.filterState.languageid}}}
+            // }
+            //
+            // if(filterState.filterState.countryid) {
+            //   where = {...where, country: {id: {eq: filterState.filterState.countryid}}}
+            // }
+            //
+            // if(filterState.filterState.standardid) {
+            //   where = {...where, id: {eq: filterState.filterState.standardid}}
+            // }
+            //
+            // if(filterState.filterState.classcode) {
+            //   where = {...where, classes: {code: {eq: filterState.filterState.classcode}}}
+            // }
 
           }
+
+
 
           const g = gql(q);
 
